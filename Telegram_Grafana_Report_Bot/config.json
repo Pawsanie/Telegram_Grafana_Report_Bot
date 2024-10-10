@@ -1,0 +1,31 @@
+{
+  "Telegram_Bot":
+  {
+    "token": "${TELEGRAM_BOT_TOKEN}",
+    "dm_white_list": [
+      "${TELEGRAM_BOT_DM_WHITE_LIST}"
+    ],
+    "channel_id": [
+      "${TELEGRAM_CHANNEL_ID}"
+    ]
+  },
+
+  "Grafana": [
+
+     {
+      "token": "${GRAFANA_TOKEN}",
+      "url": "${GRAFANA_URL}",
+      "handlers": {
+        "-e1": {
+          "dashboard": "ee0jj9k1l8zr4d",
+          "panel": 1
+        },
+        "-e2": {
+          "dashboard": "ee0jj9k1l8zr4d",
+          "panel": 2
+        }
+      }
+     }
+
+  ]
+}

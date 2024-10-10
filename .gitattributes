@@ -1,0 +1,28 @@
+# Python settings:
+*.py text eol=lf
+*.py linguist-language=Python
+*.py encoding=utf-8
+
+# Json settings:
+*.json text eol=lf
+*.json linguist-language=JSON
+*.json encoding=utf-8
+
+# Yaml settings:
+*.yaml text eol=lf
+*.yaml linguist-language=YAML
+*.yaml encoding=utf-8
+
+# Dockerfile:
+Dockerfile text eol=lf
+Dockerfile linguist-language=Dockerfile
+Dockerfile encoding=utf-8
+
+# Requirements:
+requirements.txt text eol=lf
+requirements.txt encoding=utf-8
+
+# Bash settings:
+*.sh text eol=lf
+*.sh linguist-language=Shell
+*.sh encoding=utf-8
