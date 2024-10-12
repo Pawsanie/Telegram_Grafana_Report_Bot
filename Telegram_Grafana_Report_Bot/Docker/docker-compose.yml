@@ -30,6 +30,7 @@ services:
     container_name: Example_Grafana
     ports:
       - "3000:3000"
+      - "5672:5672"
     networks:
       - grafana_network
     environment:
@@ -55,10 +56,13 @@ services:
     environment:
       - GRAFANA_TOKEN=${GRAFANA_TOKEN}
       - GRAFANA_URL=${GRAFANA_URL}
+    ports:
+      - "5672:5672"
     volumes:
       - ../Grafana/Ansible/technical_user.json:/ansible/technical_user.json
       - ../Grafana/Ansible/playbook.yaml:/ansible/temporary_playbook.yaml:rw
       - ../Grafana/Ansible/entry_point.sh:/ansible/entry_point.sh
+      - ../Grafana/Ansible/inventory.ini:/ansible/inventory.ini
     restart: no
 
 volumes:

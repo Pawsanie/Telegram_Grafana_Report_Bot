@@ -1,6 +1,6 @@
 ---
 - name: Add technical user to Grafana
-  hosts: localhost
+  hosts: example_grafana
   tasks:
     - name: Wait for Grafana to start
       uri:
