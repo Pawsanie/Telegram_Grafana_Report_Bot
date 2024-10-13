@@ -1,6 +1,7 @@
 import logging
 
 from Logger import logging_config, text_for_logging
+from Config_Parser import BotConfigParser
 from Grafana_Scraper import GrafanaScraper
 from Telegram_Report_Bot import TelegramReportBot
 """
@@ -10,13 +11,22 @@ Contains the entry point code for the program.
 
 class TelegramGrafanaReportBot:
     def __init__(self):
-        self._report_bot: TelegramReportBot = TelegramReportBot()
-        # self._grafana_scraper: GrafanaScraper = GrafanaScraper(
-        #     grafana_token=...
-        # )
+        # Parse config:
+        self._config_parser: BotConfigParser = BotConfigParser()
+
+        # Grafana settings:
+        self._grafana_scraper: GrafanaScraper = GrafanaScraper(
+            self._config_parser.get_grafana_scraper_config()
+        )
+
+        # Telegram bot settings:
+        self._report_bot: TelegramReportBot = TelegramReportBot(
+            bot_config=self._config_parser.get_telegram_bot_config()
+        )
 
     def run(self):
-        ...
+        while True:
+            ...
 
 
 if __name__ == "__main__":

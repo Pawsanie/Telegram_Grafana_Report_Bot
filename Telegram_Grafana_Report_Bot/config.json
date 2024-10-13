@@ -17,12 +17,16 @@
       "url": "${GRAFANA_URL}",
       "handlers": {
         "-e1": {
-          "dashboard": "ee0jj9k1l8zr4d",
-          "panel": 1
+          "dashboard_uid": "ee0jj9k1l8zr4d",
+          "panel": 1,
+          "kiosk_status": true,
+          "time_zone": "Europe%2FMoscow"
         },
         "-e2": {
-          "dashboard": "ee0jj9k1l8zr4d",
-          "panel": 2
+          "dashboard_uid": "ee0jj9k1l8zr4d",
+          "panel": 2,
+          "kiosk_status": false,
+          "time_zone": "Etc%2FUTC"
         }
       }
      }
