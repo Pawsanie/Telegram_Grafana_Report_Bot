@@ -16,6 +16,8 @@ services:
       - TELEGRAM_CHANNEL_ID=${TELEGRAM_CHANNEL_ID}
       - TELEGRAM_BOT_DM_WHITE_LIST=${TELEGRAM_BOT_DM_WHITE_LIST}
       - GRAFANA_TOKEN=${GRAFANA_TOKEN}
+      - TELEGRAM_BOT_CHANNEL_WHITE_LIST=${TELEGRAM_BOT_CHANNEL_WHITE_LIST}
+      - GRAFANA_URL=${GRAFANA_URL}
     networks:
       - external_network
       - grafana_network
@@ -27,18 +29,21 @@ services:
 
   example_grafana:
     image: grafana/grafana:11.2.2
+    platform: linux/amd64
     container_name: Example_Grafana
     ports:
       - "3000:3000"
-      - "5672:5672"
+#      - "5672:5672"
     networks:
       - grafana_network
     environment:
+      - GF_INSTALL_PLUGINS=grafana-image-renderer
       - GF_SERVER_ROOT_URL=${GRAFANA_URL}
       - GRAFANA_TOKEN=${GRAFANA_TOKEN}
       - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
       - GF_DASHBOARDS_JSON_ENABLED=true
+      - GF_RENDERER_PLUGIN_IGNORE_HTTPS_ERRORS=true
     volumes:
       - grafana_persistent_storage:/var/lib/grafana
       - ../Grafana/dashboards:/var/lib/grafana/dashboards

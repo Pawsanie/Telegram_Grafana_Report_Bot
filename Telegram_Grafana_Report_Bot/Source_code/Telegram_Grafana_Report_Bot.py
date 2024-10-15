@@ -2,7 +2,7 @@ import logging
 
 from Logger import logging_config, text_for_logging
 from Config_Parser import BotConfigParser
-from Grafana_Scraper import GrafanaScraper
+from Grafana_Parser import GrafanaParser
 from Telegram_Report_Bot import TelegramReportBot
 """
 Contains the entry point code for the program.
@@ -15,18 +15,18 @@ class TelegramGrafanaReportBot:
         self._config_parser: BotConfigParser = BotConfigParser()
 
         # Grafana settings:
-        self._grafana_scraper: GrafanaScraper = GrafanaScraper(
+        self._grafana_scraper: GrafanaParser = GrafanaParser(
             self._config_parser.get_grafana_scraper_config()
         )
 
         # Telegram bot settings:
         self._report_bot: TelegramReportBot = TelegramReportBot(
-            bot_config=self._config_parser.get_telegram_bot_config()
+            bot_config=self._config_parser.get_telegram_bot_config(),
+            handlers_configuration=self._grafana_scraper.get_handlers_settings()
         )
 
-    def run(self):
-        while True:
-            ...
+        # Run loop:
+        self._report_bot.bot_loop()
 
 
 if __name__ == "__main__":
@@ -35,7 +35,7 @@ if __name__ == "__main__":
         log_level=30
     )
     try:
-        TelegramGrafanaReportBot().run()
+        TelegramGrafanaReportBot()
     except Exception as error:
         logging.critical(
             text_for_logging(
