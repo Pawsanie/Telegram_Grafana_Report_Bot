@@ -11,7 +11,7 @@ class GrafanaParser:
         # Grafana settings:
         self._grafana_config: dict = grafana_config
         self._time_reference: str = "orgId=1&refresh=10s&from={}&to={}"
-        self._panel_reference: str = "panelId={}&width={}&height={}"
+        self._panel_reference: str = "viewPanel={}&width={}&height={}"
 
     def get_handlers_settings(self) -> dict:
         """

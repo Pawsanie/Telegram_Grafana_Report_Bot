@@ -121,6 +121,7 @@ class TelegramReportBot:
                      "\nCommand examples:"
                      "\n/start"
                      "\n/help"
+                     + "\n/"
                      + "\n/".join(
                         self._handlers_configuration.keys()
                      )
