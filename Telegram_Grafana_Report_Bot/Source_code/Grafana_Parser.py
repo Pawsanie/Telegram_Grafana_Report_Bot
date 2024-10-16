@@ -38,7 +38,7 @@ class GrafanaParser:
                                 grafana_settings=handler_settings
                             ),
                             "request_header": {
-                                "Accept": "application/json",
+                                "Accept": "image/png",
                                 "Authorisation": "Bearer {}".format(
                                     grafana_instance["token"]
                                 )

@@ -14,7 +14,6 @@ class TelegramReportBot:
             handlers_configuration: dict
     ):
         """
-        ...
         :param bot_config:
         :param handlers_configuration:
         """
@@ -48,8 +47,18 @@ class TelegramReportBot:
             async with ClientSession(
                     headers=headers
             ) as session:
-                async with session.get(url=image_url) as response:
-                    response.raise_for_status()
+                async with session.get(
+                        url=image_url,
+                        allow_redirects=True
+                ) as response:
+                    logging.log(
+                        level=
+                        logging.INFO if response.status == 200
+                        else logging.WARNING,
+                        msg=
+                        f"Try to download image from url:\n{grafana_image_url}\n"
+                        f"Status {response.status}"
+                    )
                     return await response.read()
 
         # Generate Grafana image url:
@@ -67,15 +76,13 @@ class TelegramReportBot:
             time_until
         )
 
-        logging.error(grafana_image_url)
-
         # Download Grafana dashboard image:
         grafana_dashboard_image: bytes = await download_file(grafana_image_url)
         return BytesIO(grafana_dashboard_image)
 
     def bot_loop(self):
         for handler in self._handlers_configuration:
-            async def _grafana_handle(message):
+            async def grafana_handle(message, handler_name):
                 chat_id: str = message.chat.id
                 chat_type: str = message.chat.type
                 user_name: str = message.from_user.username
@@ -94,8 +101,8 @@ class TelegramReportBot:
                 #     returnW
 
                 get_image_data: BytesIO = await self._get_grafana_image(
-                            grafana_raw_url=self._handlers_configuration[handler]["url"],
-                            headers=self._handlers_configuration[handler]["request_header"]
+                            grafana_raw_url=self._handlers_configuration[handler_name]["url"],
+                            headers=self._handlers_configuration[handler_name]["request_header"]
                         )
                 grafana_dashboard_image: str = get_image_data.getvalue().decode('utf-8')
                 await self._telegram_bot.send_photo(
@@ -103,7 +110,7 @@ class TelegramReportBot:
                     photo=grafana_dashboard_image
                 )
             self._telegram_bot.register_message_handler(
-                callback=_grafana_handle,
+                callback=lambda message, handler_name=handler: grafana_handle(message, handler_name),
                 commands=[handler],
                 content_types=['text']
             )
