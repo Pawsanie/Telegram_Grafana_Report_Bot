@@ -24,9 +24,12 @@ class TelegramReportBot:
         :param bot_config: Hash table with Telegram bot configuration data.
         :param handlers_configuration: Hash table with handlers data.
         """
+        # Bot settings:
         self._bot_config: dict = bot_config
         self._handlers_configuration: dict = handlers_configuration
+        self._start_time: float = datetime.now().timestamp()
 
+        # Create bot session:
         self._telegram_bot: AsyncTeleBot = AsyncTeleBot(
             token=self._bot_config["token"]
         )
@@ -103,12 +106,15 @@ class TelegramReportBot:
         """
         # Message settings:
         chat_id: int = message.chat.id
-        chat_type: str = message.chat.type
         user_name: str = message.from_user.username
+
+        # Exact time settings:
+        if message.date < self._start_time:
+            return False
 
         # Bot direct messages settings:
         dm_rules: tuple = (
-                    chat_type == "private",
+                    message.chat.type == "private",
                     user_name in self._bot_config["dm_white_list"]
                 )
         if dm_rules[0]:
@@ -172,8 +178,9 @@ class TelegramReportBot:
                     chat_id=message.chat.id,
                     photo=get_image_data,
                     caption=
-                    f"\n{self._handlers_configuration[handler_name]['handle_description']}"
-                    f'\n<a href="{grafana_image_url}">Link</a> to event in dashboard.',
+                    f"{self._handlers_configuration[handler_name]['handle_description']}",
+                    # TODO: Now the mechanism for attaching a url link to a photo has been implemented...
+                    # f'\n<a href="{grafana_image_url.replace("&", "&amp;")}">Link</a> to event in dashboard.',
                     parse_mode="HTML"
                 )
 
