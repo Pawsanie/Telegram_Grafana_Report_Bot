@@ -27,7 +27,8 @@
             "id": 1,
             "width": 560,
             "height": 480
-          }
+          },
+          "handle_description": "Example dashboard 01"
         },
         "e2": {
           "dashboard_uid": "ee0jj9k1l8zr4d",
@@ -37,7 +38,8 @@
             "id": 2,
             "width": 560,
             "height": 480
-          }
+          },
+          "handle_description": "Example dashboard 02"
         }
       }
      }

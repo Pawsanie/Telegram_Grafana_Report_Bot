@@ -39,10 +39,9 @@ class GrafanaParser:
                             ),
                             "request_header": {
                                 "Accept": "image/png",
-                                "Authorisation": "Bearer {}".format(
-                                    grafana_instance["token"]
-                                )
-                            }
+                                "Authorisation": f"Bearer {grafana_instance['token']}"
+                            },
+                            "handle_description": handler_settings["handle_description"]
                         }
                     }
                 )

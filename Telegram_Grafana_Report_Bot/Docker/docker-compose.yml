@@ -12,12 +12,17 @@ services:
       - ../config.json:/application/temporary_config.json:rw
       - ./requirements.txt:/requirements.txt
     environment:
+      # Telegram settings:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_CHANNEL_ID=${TELEGRAM_CHANNEL_ID}
+
+      # Bot white lists:
       - TELEGRAM_BOT_DM_WHITE_LIST=${TELEGRAM_BOT_DM_WHITE_LIST}
-      - GRAFANA_TOKEN=${GRAFANA_TOKEN}
       - TELEGRAM_BOT_CHANNEL_WHITE_LIST=${TELEGRAM_BOT_CHANNEL_WHITE_LIST}
+
+      # Grafana settings:
       - GRAFANA_URL=${GRAFANA_URL}
+      - GRAFANA_TOKEN=${GRAFANA_TOKEN}
     networks:
       - external_network
       - grafana_network
@@ -38,13 +43,26 @@ services:
     networks:
       - grafana_network
     environment:
-      - GF_SERVER_ROOT_URL=${GRAFANA_URL}
-      - GRAFANA_TOKEN=${GRAFANA_TOKEN}
-      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
-      - GF_DASHBOARDS_JSON_ENABLED=true
+      # Grafana url settings:
+#      - GF_SERVER_ROOT_URL=${GRAFANA_URL}
+      - GF_SERVER_DOMAIN=example_grafana
+
+      # Grafana Redner settings:
       - GF_RENDERING_SERVER_URL=${GRAFANA_RENDER_SERVER_URL}
       - GF_RENDERING_CALLBACK_URL=${GRAFANA_URL}
+
+      # Admin user credentials:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+
+      # Dashboards in persistent storage:
+      - GF_DASHBOARDS_JSON_ENABLED=true
+
+      # Security policy:
+      - GF_AUTH_TOKEN_AUTH_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=true
+      # Crutch:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
     volumes:
       - grafana_persistent_storage:/var/lib/grafana
       - ../Grafana/dashboards:/var/lib/grafana/dashboards
@@ -60,10 +78,7 @@ services:
       - grafana_network
     environment:
       - ENABLE_METRICS=true
-      - RENDERING_MODE=clustered
-      - RENDERING_CLUSTERING_MODE=context
-      - RENDERING_CLUSTERING_MAX_CONCURRENCY=6
-      - GRAFANA_RENDERER_CALLBACK_URL=${GRAFANA_URL}
+      - RENDERER_ARGS="--no-sandbox"
     restart: always
 
 volumes:
