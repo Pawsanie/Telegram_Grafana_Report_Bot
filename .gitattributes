@@ -26,8 +26,3 @@ requirements.txt encoding=utf-8
 *.sh text eol=lf
 *.sh linguist-language=Shell
 *.sh encoding=utf-8
-
-# INI settings:
-*.ini text eol=lf
-*.ini linguist-language=INI
-*.ini encoding=utf-8
