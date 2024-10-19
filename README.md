@@ -1,5 +1,12 @@
 # Telegram Grafana Report Bot
 
+The repository contains the source code of the Bot that sends users Grafana graphics upon request in channels or private messages in Telegram.<br>
+The bot can interact with any number of handles from any number of Grafans.<br>
+All of them are added through the JSON configuration.<br>
+
+The repository also contains an example deployment for Docker-Compose.<br>
+Including 2 test charts.
+
 ## Disclaimer:
 :warning:**Using** some or all of the elements of this code, **You** assume **responsibility for any consequences!**<br>
 
