@@ -34,18 +34,6 @@ class TelegramReportBot:
             token=self._bot_config["token"]
         )
 
-    def _send_massage(self, *, channel_id: str, message: str):
-        """
-        :param channel_id: Chanel id.
-        :param message: Message for sending.
-        """
-        self._telegram_bot.send_message(
-            chat_id=channel_id,
-            text=message,
-            parse_mode="Markdown",
-            disable_web_page_preview=True
-        )
-
     @staticmethod
     async def _get_grafana_image(*, grafana_image_url: str, headers: dict) -> BytesIO:
         """
@@ -77,6 +65,90 @@ class TelegramReportBot:
                 return BytesIO(
                     await response.read()
                 )
+
+    def _handlers_constructor(self):
+        """
+        Generate handlers callbacks and register handlers for Telegram Bot.
+        """
+        for handler in self._handlers_configuration:
+            async def grafana_handle(
+                    message: Message,
+                    handler_name: str
+            ):
+                if self._user_validator(message) is False:
+                    return
+
+                # Generate replay content:
+                grafana_image_url: str = self._generate_grafana_url(
+                    grafana_raw_url=self._handlers_configuration[
+                        handler_name
+                    ][
+                        "url"
+                    ]
+                )
+                get_image_data: BytesIO = await self._get_grafana_image(
+                            grafana_image_url=grafana_image_url,
+                            headers=self._handlers_configuration[
+                                handler_name
+                            ][
+                                "request_header"
+                            ]
+                        )
+
+                # Send message:
+                await self._telegram_bot.send_photo(
+                    chat_id=message.chat.id,
+                    photo=get_image_data,
+                    caption=
+                    f"{self._handlers_configuration[handler_name]['handle_description']}",
+                    # TODO: Now the mechanism for attaching a url link to a photo has been implemented...
+                    # f'\n<a href="{grafana_image_url.replace("&", "&amp;")}">Link</a> to event in dashboard.',
+                    parse_mode="HTML"
+                )
+
+            # Register handler:
+            self._telegram_bot.register_message_handler(
+                callback=lambda message, handler_name=handler: grafana_handle(
+                    message, handler_name
+                ),
+                commands=[handler],
+                content_types=['text']
+            )
+
+    def _generate_welcome_message(self):
+        """
+        Generate and register welcome message for Telegram Bot.
+        """
+        @self._telegram_bot.message_handler(
+            commands=[
+                "start",
+                "help"
+            ]
+        )
+        async def send_welcome(message):
+            if self._user_validator(message) is False:
+                return
+            await self._telegram_bot.send_message(
+                chat_id=message.chat.id,
+                text=
+                "Greetings from GrafanaReport Bot!"
+                "\nUsing the following commands,"
+                "\nyou can always access important metrics of your business.\n"
+                "\nCommand examples:"
+                "\n/start - repeat this message."
+                "\n/help - will do the same."
+                "\n/" +
+                "\n/".join(
+                    f'{handler_name} - {description}.'
+                    for handler_name, description in zip(
+                        self._handlers_configuration.keys(),
+                        [
+                            value["handle_description"] for value
+                            in self._handlers_configuration.values()
+                        ]
+                    )
+                )
+            )
 
     @staticmethod
     def _generate_grafana_url(grafana_raw_url) -> str:
@@ -148,83 +220,10 @@ class TelegramReportBot:
         Registers handles and starts an infinite loop of bot.
         """
         # Generate handlers callbacks:
-        for handler in self._handlers_configuration:
-            async def grafana_handle(
-                    message: Message,
-                    handler_name: str
-            ):
-                if self._user_validator(message) is False:
-                    return
+        self._handlers_constructor()
+        self._generate_welcome_message()
 
-                # Generate replay content:
-                grafana_image_url: str = self._generate_grafana_url(
-                    grafana_raw_url=self._handlers_configuration[
-                        handler_name
-                    ][
-                        "url"
-                    ]
-                )
-                get_image_data: BytesIO = await self._get_grafana_image(
-                            grafana_image_url=grafana_image_url,
-                            headers=self._handlers_configuration[
-                                handler_name
-                            ][
-                                "request_header"
-                            ]
-                        )
-
-                # Send message:
-                await self._telegram_bot.send_photo(
-                    chat_id=message.chat.id,
-                    photo=get_image_data,
-                    caption=
-                    f"{self._handlers_configuration[handler_name]['handle_description']}",
-                    # TODO: Now the mechanism for attaching a url link to a photo has been implemented...
-                    # f'\n<a href="{grafana_image_url.replace("&", "&amp;")}">Link</a> to event in dashboard.',
-                    parse_mode="HTML"
-                )
-
-            # Register handler:
-            self._telegram_bot.register_message_handler(
-                callback=lambda message, handler_name=handler: grafana_handle(
-                    message, handler_name
-                ),
-                commands=[handler],
-                content_types=['text']
-            )
-
-        # Generate welcome message:
-        @self._telegram_bot.message_handler(
-            commands=[
-                "start",
-                "help"
-            ]
-        )
-        async def send_welcome(message):
-            if self._user_validator(message) is False:
-                return
-            await self._telegram_bot.send_message(
-                chat_id=message.chat.id,
-                text=
-                "Greetings from GrafanaReport Bot!"
-                "\nUsing the following commands," 
-                "\nyou can always access important metrics of your business.\n"
-                "\nCommand examples:"
-                "\n/start - repeat this message."
-                "\n/help - will do the same."
-                "\n/" +
-                "\n/".join(
-                    f'{handler_name} - {description}.'
-                    for handler_name, description in zip(
-                        self._handlers_configuration.keys(),
-                        [
-                            value["handle_description"] for value
-                            in self._handlers_configuration.values()
-                        ]
-                    )
-                          )
-            )
-
+        # Run loop:
         run(
             self._telegram_bot.polling()
         )

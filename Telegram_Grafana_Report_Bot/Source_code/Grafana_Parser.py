@@ -17,7 +17,7 @@ class GrafanaParser:
         """
         Generate handlers settings for TelegramReportBot.
         Used in TelegramGrafanaReportBot.
-        :return:
+        :return: dict
         """
         return self._generate_handlers()
 
