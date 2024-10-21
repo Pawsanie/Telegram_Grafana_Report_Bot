@@ -218,7 +218,7 @@ GRAFANA_ADMIN_PASSWORD=...
 ```
 * TELEGRAM_BOT_DM_WHITE_LIST - List of names of trusted users in telegram, written separated by commas without spaces.
 * TELEGRAM_BOT_CHANNEL_WHITE_LIST - List of names of trusted users in telegram, written separated by commas without spaces.
-<br>
+
 * TELEGRAM_BOT_TOKEN - The **token** we received by performing the steps in «[Telegram Bot registration](#Telegram-Bot-registration)».
 * TELEGRAM_CHANNEL_ID - «[Telegram channel settings](#Telegram-channel-settings)»
 * GRAFANA_TOKEN - The **token** we received by performing the steps in «[Crate Grafana Technical User](#Crate-Grafana-Technical-User)».
