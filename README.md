@@ -101,7 +101,8 @@ And select **Viewer** rights for him.
 Be sure to **copy the token immediately** after this.<br>
 It will only be **shown once**.<br>
 It will be needed for program **configuration** file.<br>
-More details about its use can be found in paragraphs «[Deploy with Docker-Compose](#Deploy-with-Docker-Compose)» and «[Run on Bare-Metal or Virtual Machine](#Run-on-Bare-Metal-or-Virtual-Machine)».
+More details about its use can be found in paragraphs «[Deploy with Docker-Compose](#Deploy-with-Docker-Compose)» <br>
+and «[Run on Bare-Metal or Virtual Machine](#Run-on-Bare-Metal-or-Virtual-Machine)».
 
 ### Add new handlers to Config file:
 Since the complete filling of the configuration file depends on how you will **deploy** the application, <br>
