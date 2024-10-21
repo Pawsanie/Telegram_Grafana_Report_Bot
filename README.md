@@ -74,7 +74,8 @@ To start the bot registration process, you must **have** a [Telegram](https://te
 * After that, write what your bot will be called. This name will be **displayed** as its name in the **profile**.<br>
 Then you will need to write the **unique bot ID**, according to the **instructions**.<br>
 As a result, you will receive a unique **token** for your bot. It will be needed for program **configuration** file.<br>
-More details about its use can be found in paragraphs «[Deploy-with-Docker-Compose](#Deploy-with-Docker-Compose)» and «[Run on Bare-Metal or Virtual Machine](#Run-on-Bare-Metal-or-Virtual-Machine)».
+More details about its use can be found in paragraphs «[Deploy-with-Docker-Compose](#Deploy-with-Docker-Compose)» <br>
+and «[Run on Bare-Metal or Virtual Machine](#Run-on-Bare-Metal-or-Virtual-Machine)».
 
 ### Telegram channel settings:
 Create a channel in Telegram in any way convenient for you.
@@ -84,7 +85,8 @@ Remove all unnecessary rights from him: the ability to write messages to the cha
 Find your chanel and copy **channel id** in web url after **#-** symbols.<br>
 As exemple **#-0000000000**.<br>
 It will be needed for program **configuration** file.
-* More details about its use can be found in paragraphs «[Deploy with Docker-Compose](#Deploy-with-Docker-Compose)» and «[Run on Bare-Metal or Virtual Machine](#Run-on-Bare-Metal-or-Virtual-Machine)».
+* More details about its use can be found in paragraphs «[Deploy with Docker-Compose](#Deploy-with-Docker-Compose)» <br>
+and «[Run on Bare-Metal or Virtual Machine](#Run-on-Bare-Metal-or-Virtual-Machine)».
 
 ### Crate Grafana Technical User:
 The creation process will be described for version **11.2.2**. In other versions the interface may change.<br>
