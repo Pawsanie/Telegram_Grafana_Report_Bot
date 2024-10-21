@@ -5,7 +5,7 @@ from asyncio import run
 
 from aiohttp import ClientSession
 from telebot.async_telebot import AsyncTeleBot
-from telebot.types import Message
+from telebot.types import Message, InputMediaPhoto
 """
 Contents Telegram Report Bot code.
 """
@@ -35,7 +35,7 @@ class TelegramReportBot:
         )
 
     @staticmethod
-    async def _get_grafana_image(*, grafana_image_url: str, headers: dict) -> BytesIO:
+    async def _streaming_grafana_image(*, grafana_image_url: str, headers: dict) -> BytesIO:
         """
         Download grafana dashboard image for telegram message.
         :param grafana_image_url: Url without time.
@@ -66,6 +66,29 @@ class TelegramReportBot:
                     await response.read()
                 )
 
+    async def _get_grafana_image(self, handler_name: str) -> BytesIO:
+        """
+        Controls the image loading process according to the handle.
+        :param handler_name: User bot command.
+        :return: BytesIO
+        """
+        grafana_image_url: str = self._generate_grafana_url(
+            grafana_raw_url=self._handlers_configuration[
+                handler_name
+            ][
+                "url"
+            ]
+        )
+        get_image_data: BytesIO = await self._streaming_grafana_image(
+            grafana_image_url=grafana_image_url,
+            headers=self._handlers_configuration[
+                handler_name
+            ][
+                "request_header"
+            ]
+        )
+        return get_image_data
+
     def _handlers_constructor(self):
         """
         Generate handlers callbacks and register handlers for Telegram Bot.
@@ -79,21 +102,7 @@ class TelegramReportBot:
                     return
 
                 # Generate replay content:
-                grafana_image_url: str = self._generate_grafana_url(
-                    grafana_raw_url=self._handlers_configuration[
-                        handler_name
-                    ][
-                        "url"
-                    ]
-                )
-                get_image_data: BytesIO = await self._get_grafana_image(
-                            grafana_image_url=grafana_image_url,
-                            headers=self._handlers_configuration[
-                                handler_name
-                            ][
-                                "request_header"
-                            ]
-                        )
+                get_image_data: BytesIO = await self._get_grafana_image(handler_name)
 
                 # Send message:
                 await self._telegram_bot.send_photo(
@@ -103,7 +112,8 @@ class TelegramReportBot:
                     f"{self._handlers_configuration[handler_name]['handle_description']}",
                     # TODO: Now the mechanism for attaching a url link to a photo has been implemented...
                     # f'\n<a href="{grafana_image_url.replace("&", "&amp;")}">Link</a> to event in dashboard.',
-                    parse_mode="HTML"
+                    parse_mode="HTML",
+                    protect_content=self._bot_config["block_forwarding_messages"]
                 )
 
             # Register handler:
@@ -130,6 +140,7 @@ class TelegramReportBot:
                 return
             await self._telegram_bot.send_message(
                 chat_id=message.chat.id,
+                protect_content=self._bot_config["block_forwarding_messages"],
                 text=
                 "Greetings from GrafanaReport Bot!"
                 "\nUsing the following commands,"
@@ -147,7 +158,8 @@ class TelegramReportBot:
                             in self._handlers_configuration.values()
                         ]
                     )
-                )
+                ) +
+                "\n/all - return graphics for all handlers"
             )
 
     @staticmethod
@@ -215,6 +227,31 @@ class TelegramReportBot:
 
         return True
 
+    def _generate_send_all_graphics_handler(self):
+        """
+        Send graphics for all handlers.
+        """
+        @self._telegram_bot.message_handler(commands=["all"])
+        async def send_all_graphics(message: Message):
+            if self._user_validator(message) is False:
+                return
+
+            # Generate replay content:
+            media_collection: list[InputMediaPhoto] = [
+                InputMediaPhoto(
+                    media=await self._get_grafana_image(handler),
+                    caption=f"{self._handlers_configuration[handler]['handle_description']}"
+                )
+                for handler in self._handlers_configuration
+            ]
+
+            # Send message:
+            await self._telegram_bot.send_media_group(
+                chat_id=message.chat.id,
+                media=media_collection,
+                protect_content=self._bot_config["block_forwarding_messages"],
+            )
+
     def bot_loop(self):
         """
         Registers handles and starts an infinite loop of bot.
@@ -222,6 +259,7 @@ class TelegramReportBot:
         # Generate handlers callbacks:
         self._handlers_constructor()
         self._generate_welcome_message()
+        self._generate_send_all_graphics_handler()
 
         # Run loop:
         run(

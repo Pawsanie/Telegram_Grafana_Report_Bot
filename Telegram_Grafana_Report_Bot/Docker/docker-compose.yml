@@ -44,7 +44,6 @@ services:
       - grafana_network
     environment:
       # Grafana url settings:
-#      - GF_SERVER_ROOT_URL=${GRAFANA_URL}
       - GF_SERVER_DOMAIN=example_grafana
 
       # Grafana Redner settings:

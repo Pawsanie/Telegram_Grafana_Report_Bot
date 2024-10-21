@@ -76,6 +76,7 @@ class GrafanaParser:
                     grafana_settings['panel']['height']
                 )
             }
+            &tz={grafana_settings['time_zone']}
             {setup_kiosk(grafana_settings['kiosk_status'])}
             """\
                 .replace('\n', '')\

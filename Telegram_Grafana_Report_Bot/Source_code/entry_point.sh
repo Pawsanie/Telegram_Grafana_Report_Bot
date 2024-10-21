@@ -5,10 +5,14 @@
 cat /application/temporary_config.json > /application/config.json
 
 # Parse Bot config:
-sed -i "s|\${TELEGRAM_CHANNEL_ID}|$TELEGRAM_CHANNEL_ID|g" /application/config.json
-sed -i "s|\${TELEGRAM_BOT_TOKEN}|$TELEGRAM_BOT_TOKEN|g" /application/config.json
 sed -i "s|\${GRAFANA_URL}|$GRAFANA_URL|g" /application/config.json
 sed -i "s|\${GRAFANA_TOKEN}|$GRAFANA_TOKEN|g" /application/config.json
+
+sed -i "s|\${TELEGRAM_BOT_TOKEN}|$TELEGRAM_BOT_TOKEN|g" /application/config.json
+
+TELEGRAM_CHANNEL_ID=$(echo "$TELEGRAM_CHANNEL_ID" | sed 's/,/","/g')
+TELEGRAM_CHANNEL_ID="$TELEGRAM_CHANNEL_ID"
+sed -i "s|\${TELEGRAM_CHANNEL_ID}|$TELEGRAM_CHANNEL_ID|g" /application/config.json
 
 TELEGRAM_BOT_DM_WHITE_LIST=$(echo "$TELEGRAM_BOT_DM_WHITE_LIST" | sed 's/,/","/g')
 TELEGRAM_BOT_DM_WHITE_LIST="$TELEGRAM_BOT_DM_WHITE_LIST"

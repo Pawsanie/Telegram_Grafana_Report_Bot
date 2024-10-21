@@ -10,7 +10,8 @@
     ],
     "channel_white_list": [
       "${TELEGRAM_BOT_CHANNEL_WHITE_LIST}"
-    ]
+    ],
+    "block_forwarding_messages": true
   },
 
   "Grafana": [
