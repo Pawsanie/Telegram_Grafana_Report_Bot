@@ -16,7 +16,7 @@ class TelegramGrafanaReportBot:
 
         # Grafana settings:
         self._grafana_scraper: GrafanaParser = GrafanaParser(
-            self._config_parser.get_grafana_scraper_config()
+            self._config_parser.get_grafana_parser_config()
         )
 
         # Telegram bot settings:

@@ -20,7 +20,7 @@ class BotConfigParser:
         # Config settings:
         self._raw_data: dict = self._raw_config_load()
         self._telegram_bot_config: dict = self._raw_data["Telegram_Bot"]
-        self._grafana_scraper_config: dict = self._raw_data["Grafana"]
+        self._grafana_parser_config: dict = self._raw_data["Grafana"]
 
     def _raw_config_load(self) -> dict:
         """
@@ -43,9 +43,9 @@ class BotConfigParser:
         """
         return self._telegram_bot_config
 
-    def get_grafana_scraper_config(self) -> dict:
+    def get_grafana_parser_config(self) -> dict:
         """
-        Get config for GrafanaScraper.
+        Get config for GrafanaParser.
         :return: dict
         """
-        return self._grafana_scraper_config
+        return self._grafana_parser_config
