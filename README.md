@@ -242,7 +242,7 @@ How to add new handles, including grafana instances, can be read in the «[Add n
 
 If you do not want to use more than one Grafana, you just need to replace the data in the file with your own, according to the rules described above.<br>
 There is no point in describing the structure of these files listed at the beginning of the paragraph in more detail, <br>
-since you will literally need to make duplicates of these variables for new grafana instances, but under different names.<br>
+since you will literally need to make duplicates of these variables for new grafana instances, but under different names.
 
 **Example of using Docker variables in config.json file:**<br>
 ```json
