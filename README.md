@@ -42,17 +42,15 @@ The application code is written in python and obviously depends on it.<br>
 * :bookmark_tabs:[Python internet page](https://www.python.org/)
 
 ## Required Packages:
-**aiohttp** [Apache License version 2.0]:
+**aiohttp** [Apache License version 2.0]:<br>
+Used to perform asynchronous requests.
 * :octocat:[Aiohttp GitHub](https://github.com/aio-libs/aiohttp)
 * :bookmark_tabs:[Aiohttp pypi internet page](https://pypi.org/project/aiohttp/)
 
-Used to perform asynchronous requests.
-
-**pyTelegramBotAPI** [GPL-2.0 license]:
+**pyTelegramBotAPI** [GPL-2.0 license]:<br>
+Used to interact with the telegram api
 * :octocat:[pyTelegramBotAPI GitHub](https://github.com/eternnoir/pyTelegramBotAPI)
 * :bookmark_tabs:[pyTelegramBotAPI pypi internet page](https://pypi.org/project/pyTelegramBotAPI/)
-
-Used to interact with the telegram api
 
 ## Installing the Required Packages:
 ```bash
