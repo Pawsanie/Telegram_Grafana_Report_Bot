@@ -228,21 +228,21 @@ GRAFANA_ADMIN_PASSWORD=...
 In Telegram usernames start with the "**@**" symbol.<br>
 But you must specify the username without it.
 
-* TELEGRAM_BOT_TOKEN - the **token** we received by performing the steps in «[Telegram Bot registration](#Telegram-Bot-registration)».
+* TELEGRAM_BOT_TOKEN - the **token** we received by performing the steps in «[Telegram Bot registration](#Telegram-Bot-registration)» paragraph.
 * TELEGRAM_CHANNEL_ID - list of channels where it is permissible to call the bot, written separated by commas without spaces.<br>
 How to find out the channel name is described in «[Telegram channel settings](#Telegram-channel-settings)» paragraph.
-* GRAFANA_TOKEN - the **token** we received by performing the steps in «[Crate Grafana Technical User](#Crate-Grafana-Technical-User)».
+* GRAFANA_TOKEN - the **token** we received by performing the steps in «[Crate Grafana Technical User](#Crate-Grafana-Technical-User)» paragraph.
 * GRAFANA_URL - ip address or DNS name of yore Grafana instance.
 * GRAFANA_RENDER_SERVER_URL - ip address or DNS name of yore Grafana-Render instance.
 * GRAFANA_ADMIN_USER - name of Grafana root user.
 * GRAFANA_ADMIN_PASSWORD - Grafana root user password.
 Each instance of your Grafana or render servers needs its own environment variables.<br>
 Additional instances will also need to be added in **docker-compose.yaml** and **entry_point.sh**.<br>
-How to add new handles, including grafana instances, can be read in the «[Add new handlers to Config file](#Add-new-handlers-to-Config-file) paragraph)».
+How to add new handles, including grafana instances, can be read in the «[Add new handlers to Config file](#Add-new-handlers-to-Config-file)» paragraph.
 
-There is no point in describing the structure of these files in more detail, <br>
+If you do not want to use more than one Grafana, you just need to replace the data in the file with your own, according to the rules described above.<br>
+There is no point in describing the structure of these files listed at the beginning of the paragraph in more detail, <br>
 since you will literally need to make duplicates of these variables for new grafana instances, but under different names.<br>
-If you do not want to use more than one Grafana, you just need to replace the data in the file with your own, according to the rules described above.
 
 **Example of using Docker variables in config.json file:**<br>
 ```json
