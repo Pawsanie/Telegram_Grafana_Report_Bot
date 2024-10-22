@@ -166,7 +166,7 @@ To open it, click on the time settings for which to display graphs in the upper 
 Click "**Change time settings**"<br>
 Next click "**Type to search...**"<br>
 Time zones are determined by the format **Country/City**.<br>
-You need to swap **/** symbol to **%2F**.<br>
+You need to swap "**/**" symbol to "**%2F**".<br>
 You can also write IANA by analogy. As example **Etc%2FUTC**.
   * **panel** - the panel is the actual graph that is being drawn.<br>
 Each dashboard can have multiple panels, each with its own number.<br>
