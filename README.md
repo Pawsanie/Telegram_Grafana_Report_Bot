@@ -193,7 +193,10 @@ Its **value** is hardcoded as **1**.
 
 The repository contains a test example that will deploy with a sample of Grafana for an example of using the bot,<br>
 a Grafana render container, and 2 graphs.<br>
-However, you will have to customize one or more files.
+However, you will have to customize one or more files.<br>
+Please note that the example creates a persistent Docker Volume **grafana_persistent_storage**.<br>
+And since you don't have a Grafana token for the technical user account to begin with,<br>
+you'll have to run the build twice, deleting the containers after the first one.
 
 **Files location:**<br>
 **./**:open_file_folder:Telegram_Grafana_Report_Bot<br>
