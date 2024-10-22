@@ -222,9 +222,13 @@ GRAFANA_ADMIN_PASSWORD=...
 * TELEGRAM_BOT_DM_WHITE_LIST - List of names of trusted users in telegram, written separated by commas without spaces.
 * TELEGRAM_BOT_CHANNEL_WHITE_LIST - List of names of trusted users in telegram, written separated by commas without spaces.
 
-* TELEGRAM_BOT_TOKEN - The **token** we received by performing the steps in «[Telegram Bot registration](#Telegram-Bot-registration)».
-* TELEGRAM_CHANNEL_ID - «[Telegram channel settings](#Telegram-channel-settings)»
-* GRAFANA_TOKEN - The **token** we received by performing the steps in «[Crate Grafana Technical User](#Crate-Grafana-Technical-User)».
+In Telegram usernames start with the "**@**" symbol.<br>
+But you must specify the username without it.
+
+* TELEGRAM_BOT_TOKEN - the **token** we received by performing the steps in «[Telegram Bot registration](#Telegram-Bot-registration)».
+* TELEGRAM_CHANNEL_ID - list of channels where it is permissible to call the bot, written separated by commas without spaces.<br>
+How to find out the channel name is described in «[Telegram channel settings](#Telegram-channel-settings)» paragraph.
+* GRAFANA_TOKEN - the **token** we received by performing the steps in «[Crate Grafana Technical User](#Crate-Grafana-Technical-User)».
 * GRAFANA_URL - ip address or DNS name of yore Grafana instance.
 * GRAFANA_RENDER_SERVER_URL - ip address or DNS name of yore Grafana-Render instance.
 * GRAFANA_ADMIN_USER - name of Grafana root user.
@@ -314,6 +318,21 @@ Then you will need to launch the entry point to the program.
   ]
 }
 ```
+
+* **Telegram_Bot**:
+    * **token** - the **token** we received by performing the steps in «[Telegram Bot registration](#Telegram-Bot-registration)» paragraph.
+    * **dm_white_list** - usernames who can write private messages to the bot.<br>
+In Telegram usernames start with the "**@**" symbol.<br>
+But you must specify the username without it.
+    * **channel_id** - List of channels where it is permissible to call the bot.
+How to find out the channel name is described in «[Telegram channel settings](#Telegram-channel-settings)» paragraph.
+    * **channel_white_list** - list of usernames that are allowed to call the bot in channels.
+    * **block_forwarding_messages** - prevents forwarding bot messages if true.
+* **Grafana** - list of nested dictionaries describing Grafana with which the bot can interact.
+    * **token** - the **token** we received by performing the steps in «[Crate Grafana Technical User](#Crate-Grafana-Technical-User)».
+    * **url** - ip address or DNS name of yore Grafana instance.
+    * **handlers** - nested dictionary describing all the handlers that the bot can work with.<br>
+Details on how to configure them are written in [Add new handlers to Config file](#Add-new-handlers-to-Config-file) paragraph.
 
 Run **Telegram_Grafana_Report_Bot.py** with command:
 ```shell
