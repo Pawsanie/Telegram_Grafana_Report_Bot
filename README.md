@@ -45,11 +45,13 @@ The application code is written in python and obviously depends on it.<br>
 **aiohttp** [Apache License version 2.0]:
 * :octocat:[Aiohttp GitHub](https://github.com/aio-libs/aiohttp)
 * :bookmark_tabs:[Aiohttp pypi internet page](https://pypi.org/project/aiohttp/)
+
 Used to perform asynchronous requests.
 
 **pyTelegramBotAPI** [GPL-2.0 license]:
 * :octocat:[pyTelegramBotAPI GitHub](https://github.com/eternnoir/pyTelegramBotAPI)
 * :bookmark_tabs:[pyTelegramBotAPI pypi internet page](https://pypi.org/project/pyTelegramBotAPI/)
+
 Used to interact with the telegram api
 
 ## Installing the Required Packages:
