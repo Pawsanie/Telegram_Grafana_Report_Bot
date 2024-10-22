@@ -182,8 +182,8 @@ and added to each picture in caption, for ease of searching through messages.<br
 You need to come up with this value yourself.
 
 All the settings described above, except for the token, are responsible for the link that will return the image to us.<br>
-For simplicity, they are substituted in the example:<br>
-**url**:3000/render/d/**dashboard_uid**/dashboard_name?orgId=1&refresh=10s&from=time&to=time&viewPanel=**id**&width=**with**&height=**height**&tz=**time_zone**&**kiosk_status**<br>
+For simplicity, they are substituted in the example:<br><br>
+**url**:3000/render/d/**dashboard_uid**/dashboard_name?orgId=1&refresh=10s&from=time&to=time&viewPanel=**id**&width=**with**&height=**height**&tz=**time_zone**&**kiosk_status**<br><br>
 Please note that organization ID generation is not implemented.<br>
 Its **value** is hardcoded as **1**.
 
