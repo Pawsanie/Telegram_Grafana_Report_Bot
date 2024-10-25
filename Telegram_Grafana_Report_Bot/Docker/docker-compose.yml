@@ -60,8 +60,6 @@ services:
       # Security policy:
       - GF_AUTH_TOKEN_AUTH_ENABLED=true
       - GF_AUTH_BASIC_ENABLED=true
-      # Crutch:
-      - GF_AUTH_ANONYMOUS_ENABLED=true
     volumes:
       - grafana_persistent_storage:/var/lib/grafana
       - ../Grafana/dashboards:/var/lib/grafana/dashboards

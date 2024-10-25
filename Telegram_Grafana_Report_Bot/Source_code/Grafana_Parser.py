@@ -39,7 +39,7 @@ class GrafanaParser:
                             ),
                             "request_header": {
                                 "Accept": "image/png",
-                                "Authorisation": f"Bearer {grafana_instance['token']}"
+                                "Authorization": f"Bearer {grafana_instance['token']}"
                             },
                             "handle_description": handler_settings["handle_description"]
                         }
