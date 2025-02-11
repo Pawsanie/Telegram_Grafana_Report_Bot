@@ -88,7 +88,7 @@ It will be needed for program **configuration** file.
 * More details about its use can be found in paragraphs «[Deploy with Docker-Compose](#Deploy-with-Docker-Compose)» <br>
 and «[Run on Bare-Metal or Virtual Machine](#Run-on-Bare-Metal-or-Virtual-Machine)».
 
-### Crate Grafana Technical User:
+### Create Grafana Technical User:
 The creation process will be described for version **11.2.2**. In other versions the interface may change.<br>
 But it most likely will not change in the future.
 * Open your Grafana web interface.
